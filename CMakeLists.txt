@@ -112,5 +112,8 @@ set(SRTP2_INCLUDE_DIRS
 
 idf_component_register(SRCS ${SRTP2_SRCS} INCLUDE_DIRS ${SRTP2_INCLUDE_DIRS})
 target_compile_definitions(${COMPONENT_LIB} PUBLIC "-DHAVE_CONFIG_H")
-#  OUCH!  Fix a false positive in crypto_kernel.c to prevent an error during a debug build.
+
+# Reduce paranoia while building the sources
 set_source_files_properties(libsrtp/crypto/kernel/crypto_kernel.c PROPERTIES COMPILE_FLAGS -Wno-maybe-uninitialized)
+set_source_files_properties(libsrtp/srtp/srtp.c PROPERTIES COMPILE_FLAGS -Wno-incompatible-pointer-types)
+set_source_files_properties(libsrtp/crypto/cipher/cipher.c PROPERTIES COMPILE_FLAGS -Wno-incompatible-pointer-types)
